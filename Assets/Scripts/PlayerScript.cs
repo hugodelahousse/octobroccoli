@@ -19,6 +19,8 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField]
     private bool isGrounded = true;
+    
+    public int score = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -36,5 +38,13 @@ public class PlayerScript : MonoBehaviour
         * speedElasticity;
 
         rb.velocity = new Vector2(playerVelocity.x + deltaX, rb.velocity.y);
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.CompareTag("Consumable")) {
+            ConsumableScript script = other.GetComponent<ConsumableScript>();
+            score += script.value;
+            script.consume();
+        }
     }
 }
