@@ -7,7 +7,7 @@ public class procedural_generation : MonoBehaviour
     [SerializeField]
     GameObject[] prefabs = new GameObject[] {};
 
-    Vector2[] sizes;
+    Queue<GameObject> active = new Queue<GameObject>();
 
     int lastChunk;
 
@@ -23,8 +23,12 @@ public class procedural_generation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x >= nextPosition.x - 20)
+        if (Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x >= nextPosition.x - 10)
             AddChunk();
+        if (active.Peek() != null &&
+            Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x >= active.Peek().transform.position.x +
+            active.Peek().GetComponent<BoxCollider2D>().bounds.size.x/2 + 10)
+            Destroy(active.Dequeue());
     }
 
     void AddChunk()
@@ -39,5 +43,6 @@ public class procedural_generation : MonoBehaviour
         prefab.transform.position = new Vector3(nextPosition.x + width / 2, nextPosition.y, 0);
         nextPosition = new Vector2(nextPosition.x + width, nextPosition.y);
         lastChunk = ran;
+        active.Enqueue(prefab);
     }
 }
