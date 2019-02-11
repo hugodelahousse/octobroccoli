@@ -7,6 +7,8 @@ public class procedural_generation : MonoBehaviour
     [SerializeField]
     GameObject[] prefabs = new GameObject[] {};
 
+    Vector2[] sizes;
+
     int lastChunk;
 
     [SerializeField]
@@ -32,8 +34,10 @@ public class procedural_generation : MonoBehaviour
         int ran = Random.Range(0, prefabs.Length);
         if (ran == lastChunk)
             ran = (ran + 1) % prefabs.Length;
-        GameObject prefab = Instantiate(prefabs[ran], nextPosition, Quaternion.identity);
-        nextPosition.Set(nextPosition.x + prefab.GetComponent<BoxCollider2D>().bounds.size.x, nextPosition.y);
+        GameObject prefab = Instantiate(prefabs[ran], new Vector2(nextPosition.x, nextPosition.y), Quaternion.identity);
+        float width = prefab.GetComponent<BoxCollider2D>().bounds.size.x;
+        prefab.transform.position = new Vector3(nextPosition.x + width / 2, nextPosition.y, 0);
+        nextPosition = new Vector2(nextPosition.x + width, nextPosition.y);
         lastChunk = ran;
     }
 }
