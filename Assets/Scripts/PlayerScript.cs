@@ -25,7 +25,7 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        size = GetComponent<BoxCollider2D>().bounds.size;
+        size = GetComponent<CapsuleCollider2D>().bounds.size;
     }
 
     void FixedUpdate()

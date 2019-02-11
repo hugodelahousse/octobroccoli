@@ -5,6 +5,9 @@ using UnityEngine;
 public class procedural_generation : MonoBehaviour
 {
     [SerializeField]
+    GameObject firstChunk;
+
+    [SerializeField]
     GameObject[] prefabs = new GameObject[] {};
 
     Queue<GameObject> active = new Queue<GameObject>();
@@ -17,7 +20,10 @@ public class procedural_generation : MonoBehaviour
     void Start()
     {
         lastChunk = -1;
-        AddChunk();
+        if (firstChunk != null)
+            AddFirstChunk();
+        else
+            AddChunk();
     }
 
     // Update is called once per frame
@@ -43,6 +49,15 @@ public class procedural_generation : MonoBehaviour
         prefab.transform.position = new Vector3(nextPosition.x + width / 2, nextPosition.y, 0);
         nextPosition = new Vector2(nextPosition.x + width, nextPosition.y);
         lastChunk = ran;
+        active.Enqueue(prefab);
+    }
+
+    private void AddFirstChunk()
+    {
+        GameObject prefab = Instantiate(firstChunk, new Vector2(nextPosition.x, nextPosition.y), Quaternion.identity);
+        float width = prefab.GetComponent<BoxCollider2D>().bounds.size.x;
+        prefab.transform.position = new Vector3(nextPosition.x + width / 2, nextPosition.y, 0);
+        nextPosition = new Vector2(nextPosition.x + width, nextPosition.y);
         active.Enqueue(prefab);
     }
 }
