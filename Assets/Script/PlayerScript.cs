@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    private bool isGrounded = true;
     
     private Rigidbody2D rb;
     private string gravityButton = "gravity_P1"; 
@@ -14,6 +13,12 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField]
     Vector2 playerVelocity;
+
+    [SerializeField]
+    float speedElasticity = 1;
+
+    [SerializeField]
+    private bool isGrounded = true;
 
     // Start is called before the first frame update
     void Start()
@@ -27,13 +32,9 @@ public class PlayerScript : MonoBehaviour
         if (isGrounded && Input.GetButtonDown(gravityButton))
             rb.gravityScale *= -1;
 
-        Debug.Log(playerVelocity);
-        rb.velocity = new Vector2(playerVelocity.x, rb.velocity.y);
-        Debug.Log(rb.velocity);
-    }
+        float deltaX = (Camera.main.transform.position.x - transform.position.x)
+        * speedElasticity;
 
-    void Update()
-    {
-
+        rb.velocity = new Vector2(playerVelocity.x + deltaX, rb.velocity.y);
     }
 }
