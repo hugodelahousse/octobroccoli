@@ -6,7 +6,10 @@ public class PlayerScript : MonoBehaviour
 {
     
     private Rigidbody2D rb;
-    private string gravityButton = "gravity_P1"; 
+
+
+    public int playerIndex = 1;
+    private string gravityButton = "gravity_P"; 
 
     [SerializeField]
     LayerMask groundLayer;
@@ -21,11 +24,18 @@ public class PlayerScript : MonoBehaviour
 
     private Vector3 size;
 
+    private Collider2D col;
+
+    [SerializeField]
+    private LayerMask playerLayer;    
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        size = GetComponent<CapsuleCollider2D>().bounds.size;
+        col = GetComponent<Collider2D>();
+        size = col.bounds.size;
+        gravityButton += playerIndex;
     }
 
     void FixedUpdate()
@@ -47,6 +57,10 @@ public class PlayerScript : MonoBehaviour
                 groundLayer
             );
             bool isGrounded = hit.collider != null;
+
+            if (!isGrounded)
+                isGrounded = col.IsTouchingLayers(playerLayer);
+
             if (isGrounded)
                 rb.gravityScale *= -1;
         }

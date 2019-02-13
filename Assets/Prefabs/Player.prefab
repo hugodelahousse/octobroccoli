@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 177102236872362692}
   - component: {fileID: 177102236872362693}
   - component: {fileID: 6317892752790261152}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,9 +141,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca8876fe708734c4bb608df8f06a98a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerIndex: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
   playerVelocity: {x: 3, y: 0}
   speedElasticity: 0.3
-  isGrounded: 1
+  score: 0
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1024
