@@ -120,7 +120,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.24, y: 0.32}
+    oldSize: {x: 24, y: 32}
     newSize: {x: 2.4, y: 3.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -145,8 +145,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  playerVelocity: {x: 3, y: 0}
-  speedElasticity: 0.3
+  playerVelocity: {x: 300, y: 0}
+  speedElasticity: 30
   score: 0
   playerLayer:
     serializedVersion: 2

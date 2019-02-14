@@ -29,11 +29,11 @@ public class procedural_generation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x >= nextPosition.x - 10)
+        if (Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x >= nextPosition.x - 1000)
             AddChunk();
         if (active.Peek() != null &&
             Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x >= active.Peek().transform.position.x +
-            active.Peek().GetComponent<BoxCollider2D>().bounds.size.x/2 + 10)
+            active.Peek().GetComponent<BoxCollider2D>().bounds.size.x/2 + 1000)
             Destroy(active.Dequeue());
     }
 
