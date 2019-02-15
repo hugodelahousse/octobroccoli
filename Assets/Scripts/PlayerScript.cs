@@ -30,6 +30,7 @@ public class PlayerScript : MonoBehaviour
     private LayerMask playerLayer;    
 
     private SpriteRenderer rend;
+    private Animator anim;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +38,7 @@ public class PlayerScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         rend = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
         rend.flipY = rb.gravityScale < 0; 
         size = col.bounds.size;
         gravityButton += playerIndex;
@@ -53,17 +55,20 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
 
+        RaycastHit2D hit = Physics2D.Raycast(
+            transform.position - (size.x * Vector3.right / 2),
+            (Vector2.down * rb.gravityScale).normalized, size.y / 2 + 0.1f,
+            groundLayer
+        );
+        bool isGrounded = hit.collider != null;
+
+        anim.SetBool("isGrounded", isGrounded);
+
         if (Input.GetButtonDown(gravityButton))
         {
-            RaycastHit2D hit = Physics2D.Raycast(
-                transform.position - (size.x * Vector3.right / 2),
-                (Vector2.down * rb.gravityScale).normalized, size.y / 2 + 0.1f,
-                groundLayer
-            );
-            bool isGrounded = hit.collider != null;
-
             if (!isGrounded)
                 isGrounded = col.IsTouchingLayers(playerLayer);
+            
 
             if (isGrounded)
             {
@@ -71,6 +76,7 @@ public class PlayerScript : MonoBehaviour
                 rend.flipY = rb.gravityScale < 0; 
             }
         }
+        this.score = (int) (this.transform.position.x / 10);
     }
 
     void OnTriggerEnter2D(Collider2D other) {
