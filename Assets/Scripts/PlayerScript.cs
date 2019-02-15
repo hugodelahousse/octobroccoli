@@ -29,11 +29,15 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     private LayerMask playerLayer;    
 
+    private SpriteRenderer rend;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+        rend = GetComponent<SpriteRenderer>();
+        rend.flipY = rb.gravityScale < 0; 
         size = col.bounds.size;
         gravityButton += playerIndex;
     }
@@ -62,7 +66,10 @@ public class PlayerScript : MonoBehaviour
                 isGrounded = col.IsTouchingLayers(playerLayer);
 
             if (isGrounded)
+            {
                 rb.gravityScale *= -1;
+                rend.flipY = rb.gravityScale < 0; 
+            }
         }
     }
 
