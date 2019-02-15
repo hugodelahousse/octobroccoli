@@ -8,10 +8,13 @@ public class CameraScript : MonoBehaviour
     [SerializeField]
     Vector3 translation;
 
-    [SerializeField]
     GameObject[] players;
 
     private bool end = false;
+
+    void Start() {
+        players = GameObject.FindGameObjectsWithTag ("Player");
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -22,13 +25,16 @@ public class CameraScript : MonoBehaviour
     }
 
     void checkDeath() {
-        foreach (GameObject p in players) {
-            if (end || Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x >= p.transform.position.x
-                    || Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).y >= p.transform.position.y
-                    || Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).y <= p.transform.position.y
+        for (var i = 0; i < players.Length; i++) {
+            if (end || Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).x >= players[i].transform.position.x
+                    || Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0)).y >= players[i].transform.position.y
+                    || Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).y <= players[i].transform.position.y
             ) {
                 end = true;
-                Destroy(p);
+                for (var j = 0; j < players.Length; j++) {
+                    Destroy(players[j]);
+                }
+                return;
             }
         }
     }
