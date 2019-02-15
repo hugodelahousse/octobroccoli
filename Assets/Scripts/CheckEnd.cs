@@ -5,20 +5,16 @@ using UnityEngine;
 public class CheckEnd : MonoBehaviour
 {
     // Start is called before the first frame update
-    private bool enabled = false;
-    void Start()
-    {
-        
-    }
+    private bool canvasEnabled = false;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (!enabled) {
+        if (!canvasEnabled) {
             GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
             if (players.Length == 0) {
                 GetComponent<Canvas>().enabled = true;
-                enabled = true;
+                canvasEnabled = true;
             }
         }
     }

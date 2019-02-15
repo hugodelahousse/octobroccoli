@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class ScoreCounter : MonoBehaviour
 {
-    private int distance = 0;
+    UnityEngine.UI.Text score;
+    void Start() {
+        score = GetComponent<UnityEngine.UI.Text>();
+    }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
-        if (players.Length > 0) {
-            distance++;
-            GetComponent<UnityEngine.UI.Text>().text = distance.ToString();
-        }
+        score.text = ((int) Camera.main.transform.position.x / 10).ToString();
     }
 }
